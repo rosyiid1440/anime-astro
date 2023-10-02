@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const apiAnime = await fetch('https://api.jikan.moe/v4/seasons/now');
+	const dataAnime = await apiAnime.json();
+	console.log(dataAnime);
+---
+
+<Layout title="Fall Anime">
+
+	<div class="container">
+
+		<div class="row mt-5 mb-5">
+			{dataAnime.data.map((item) => (
+				<a href={`/anime/${item.mal_id}`} class="col-md-3 d-flex" style="text-decoration:none;">
+					<div class="card mb-3">
+						<img src={item.images.webp.large_image_url} class="card-img-top" alt="..." />
+						<div class="card-body">
+							<h5 class="card-title">{item.title}</h5>
+							<p class="card-text"><small class="text-muted">{item.studios.map((val) => (<small>{val.name}</small><br>))}</small></p>
+						</div>
+					</div>
+				</a>
+			))}
+		</div>
+	</div>
+</Layout>
